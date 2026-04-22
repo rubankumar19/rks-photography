@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruban Kumar Shankar — Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET & BASE ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #1a1714;
+      --paper:     #f5f1ec;
+      --warm:      #c8a97a;
+      --muted:     #7a7068;
+      --ghost:     #ede9e3;
+      --overlay:   rgba(18,15,12,.55);
+      --serif:     'Cormorant Garamond', Georgia, serif;
+      --sans:      'Raleway', sans-serif;
+      --ease:      cubic-bezier(.25,.46,.45,.94);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── PAGE SYSTEM ──────────────────────────────────────────────────── */
+    .page { display: none; opacity: 0; transition: opacity .6s var(--ease); }
+    .page.active { display: block; animation: fadeIn .7s var(--ease) forwards; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── NAV ──────────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: transparent;
+      transition: background .4s var(--ease), backdrop-filter .4s;
+    }
+
+    nav.scrolled {
+      background: rgba(245,241,236,.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,169,122,.18);
+    }
+
+    .nav-brand {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--paper);
+      cursor: pointer;
+      transition: color .3s;
+    }
+
+    nav.scrolled .nav-brand,
+    .page:not(#page-home) ~ nav .nav-brand { color: var(--ink); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--sans);
+      font-size: .65rem;
+      font-weight: 400;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(245,241,236,.85);
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      transition: color .3s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--warm);
+      transition: width .35s var(--ease);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: var(--warm); }
+
+    nav.scrolled .nav-links a { color: var(--muted); }
+    nav.scrolled .nav-links a.active { color: var(--warm); }
+
+    /* Mobile nav */
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; }
+    .nav-toggle span {
+      display: block; width: 22px; height: 1px;
+      background: var(--paper); margin: 5px 0;
+      transition: background .3s, transform .3s;
+    }
+    nav.scrolled .nav-toggle span { background: var(--ink); }
+
+    /* ── HERO ─────────────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--ink);
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(160deg,
+          rgba(30,22,14,.72) 0%,
+          rgba(18,15,12,.38) 50%,
+          rgba(40,28,16,.80) 100%),
+        /* Cinematic gradient stand-in for a photo */
+        linear-gradient(135deg, #2a1f14 0%, #1a1410 35%, #0e0c0a 60%, #1c1510 100%);
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.04);
+      transition: transform 8s var(--ease);
+    }
+
+    .hero.loaded .hero-bg { transform: scale(1); }
+
+    /* Grain overlay */
+    .hero-grain {
+      position: absolute; inset: 0;
+      opacity: .045;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--sans);
+      font-size: .6rem;
+      font-weight: 400;
+      letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--warm);
+      opacity: 0;
+      animation: riseIn .9s var(--ease) .4s forwards;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 8vw, 7.5rem);
+      font-weight: 300;
+      line-height: 1.0;
+      color: var(--paper);
+      letter-spacing: .06em;
+      margin: 1rem 0 .6rem;
+      opacity: 0;
+      animation: riseIn 1s var(--ease) .65s forwards;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(245,241,236,.65);
+    }
+
+    .hero-tagline {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 2.2vw, 1.35rem);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(245,241,236,.62);
+      letter-spacing: .04em;
+      opacity: 0;
+      animation: riseIn .9s var(--ease) .9s forwards;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .6rem;
+      cursor: pointer;
+      opacity: 0;
+      animation: riseIn .8s var(--ease) 1.4s forwards;
+    }
+
+    .hero-scroll span {
+      font-size: .55rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(245,241,236,.45);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--warm), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: .4; transform: scaleY(1); }
+      50%       { opacity: 1;  transform: scaleY(1.12); }
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS SHARED ──────────────────────────────────────────────── */
+    section { padding: 7rem 0; }
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem; }
+    .container-wide { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+
+    .section-label {
+      font-size: .58rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 1.2rem;
+    }
+
+    .section-heading {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+
+    .section-heading em {
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    /* ── INTRO ────────────────────────────────────────────────────────── */
+    .intro { background: var(--paper); }
+
+    .intro-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .intro-text p {
+      font-family: var(--serif);
+      font-size: 1.22rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-top: 1.8rem;
+    }
+
+    .intro-text p strong {
+      color: var(--ink);
+      font-weight: 400;
+    }
+
+    .intro-divider {
+      width: 40px; height: 1px;
+      background: var(--warm);
+      margin: 2rem 0;
+    }
+
+    .intro-aside {
+      position: relative;
+    }
+
+    .intro-aside-box {
+      background: var(--ghost);
+      padding: 3rem 2.5rem;
+      border-left: 2px solid var(--warm);
+      position: relative;
+    }
+
+    .intro-aside-box blockquote {
+      font-family: var(--serif);
+      font-size: 1.45rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.65;
+      color: var(--ink);
+    }
+
+    .intro-aside-box cite {
+      display: block;
+      margin-top: 1.5rem;
+      font-style: normal;
+      font-size: .62rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--warm);
+    }
+
+    /* ── WORK PREVIEW ─────────────────────────────────────────────────── */
+    .work { background: var(--ink); padding: 7rem 0; }
+
+    .work-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3.5rem;
+    }
+
+    .work-header .section-heading { color: var(--paper); }
+    .work-header .section-label { color: var(--warm); }
+
+    .work-link {
+      font-size: .6rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--warm);
+      text-decoration: none;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(200,169,122,.35);
+      padding-bottom: 2px;
+      transition: border-color .3s;
+    }
+    .work-link:hover { border-color: var(--warm); }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .work-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: #2a2320;
+      cursor: pointer;
+    }
+
+    .work-card-bg {
+      position: absolute; inset: 0;
+      transition: transform .7s var(--ease);
+    }
+
+    /* Placeholder cinematic panels */
+    .work-card:nth-child(1) .work-card-bg { background: linear-gradient(145deg, #3d2b1a, #1a1208); }
+    .work-card:nth-child(2) .work-card-bg { background: linear-gradient(145deg, #1e2530, #0d1218); }
+    .work-card:nth-child(3) .work-card-bg { background: linear-gradient(145deg, #2e1e28, #140d12); }
+
+    .work-card:hover .work-card-bg { transform: scale(1.05); }
+
+    .work-card-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2rem 1.5rem 1.5rem;
+      background: linear-gradient(to top, rgba(10,8,6,.85) 0%, transparent 100%);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .4s var(--ease), transform .4s var(--ease);
+    }
+
+    .work-card:hover .work-card-label { opacity: 1; transform: translateY(0); }
+
+    .work-card-label span {
+      font-size: .6rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--paper);
+    }
+
+    .work-card-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .8rem;
+      opacity: .22;
+    }
+
+    .work-card-placeholder .icon {
+      width: 36px; height: 36px;
+      border: 1px solid var(--paper);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .work-card-placeholder .icon::after {
+      content: '';
+      width: 10px; height: 10px;
+      background: var(--paper);
+      border-radius: 50%;
+    }
+
+    .work-card-placeholder p {
+      font-size: .58rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--paper);
+    }
+
+    /* ── ABOUT STRIP ──────────────────────────────────────────────────── */
+    .about-strip {
+      background: var(--ghost);
+      padding: 7rem 0;
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-text .section-heading { margin-bottom: 2rem; }
+
+    .about-text p {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+    }
+
+    .about-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .about-stat {
+      border-top: 1px solid rgba(122,112,104,.2);
+      padding-top: 1.5rem;
+    }
+
+    .about-stat .num {
+      font-family: var(--serif);
+      font-size: 2.6rem;
+      font-weight: 300;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .about-stat .label {
+      font-size: .6rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: .4rem;
+    }
+
+    /* ── CONTACT ──────────────────────────────────────────────────────── */
+    .contact {
+      background: var(--ink);
+      text-align: center;
+      padding: 8rem 0;
+    }
+
+    .contact .section-label { justify-content: center; display: block; }
+
+    .contact-heading {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      font-weight: 300;
+      color: var(--paper);
+      line-height: 1.15;
+      margin: 1rem auto 2.5rem;
+      max-width: 680px;
+    }
+
+    .contact-heading em {
+      font-style: italic;
+      color: rgba(245,241,236,.5);
+    }
+
+    .btn-outline {
+      display: inline-block;
+      font-size: .62rem;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--warm);
+      text-decoration: none;
+      border: 1px solid rgba(200,169,122,.4);
+      padding: 1rem 2.6rem;
+      cursor: pointer;
+      background: transparent;
+      transition: background .3s, color .3s, border-color .3s;
+    }
+
+    .btn-outline:hover {
+      background: var(--warm);
+      color: var(--ink);
+      border-color: var(--warm);
+    }
+
+    /* ── FOOTER ───────────────────────────────────────────────────────── */
+    footer {
+      background: #110e0b;
+      padding: 3rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer .brand {
+      font-family: var(--serif);
+      font-size: .9rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(245,241,236,.35);
+    }
+
+    footer .copy {
+      font-size: .58rem;
+      letter-spacing: .15em;
+      color: rgba(245,241,236,.25);
+    }
+
+    /* ── FILM PAGE ────────────────────────────────────────────────────── */
+    .film-hero {
+      height: 60vh;
+      min-height: 420px;
+      background: linear-gradient(155deg, #1c1510 0%, #0e0c0a 50%, #1e1a14 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .film-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(255,255,255,.008) 3px,
+        rgba(255,255,255,.008) 4px
+      );
+      pointer-events: none;
+    }
+
+    .film-hero-content { position: relative; z-index: 2; text-align: center; padding: 0 2rem; }
+
+    .film-hero .section-label { color: var(--warm); margin-bottom: 1.2rem; }
+
+    .film-hero-title {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 300;
+      color: var(--paper);
+      letter-spacing: .08em;
+      line-height: 1.1;
+    }
+
+    .film-hero-sub {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-style: italic;
+      color: rgba(245,241,236,.45);
+      margin-top: 1rem;
+    }
+
+    .film-intro {
+      background: var(--paper);
+      padding: 5.5rem 0 3.5rem;
+    }
+
+    .film-intro-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .film-intro-inner p {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.85;
+      color: var(--muted);
+    }
+
+    .film-intro-inner .divider {
+      width: 40px; height: 1px;
+      background: var(--warm);
+      margin: 2.5rem auto;
+    }
+
+    /* ── LIGHTROOM EMBED ──────────────────────────────────────────────── */
+    .film-gallery { background: var(--ghost); padding: 4rem 0 6rem; }
+
+    .embed-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .embed-label {
+      font-size: .58rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 2rem;
+      display: block;
+    }
+
+    .lr-container {
+      position: relative;
+      padding-bottom: 56%;
+      height: 0;
+      overflow: hidden;
+      border: 1px solid rgba(122,112,104,.15);
+      box-shadow: 0 30px 80px rgba(18,15,12,.18);
+    }
+
+    .lr-container iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ── UPCOMING ALBUMS ──────────────────────────────────────────────── */
+    .film-more { background: var(--paper); padding: 6rem 0; }
+
+    .albums-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      margin-top: 3rem;
+    }
+
+    .album-placeholder {
+      aspect-ratio: 4/3;
+      background: var(--ghost);
+      border: 1px dashed rgba(122,112,104,.25);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .8rem;
+      cursor: default;
+      transition: border-color .3s;
+    }
+
+    .album-placeholder:hover { border-color: rgba(200,169,122,.5); }
+
+    .album-placeholder .plus {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      color: rgba(122,112,104,.3);
+    }
+
+    .album-placeholder span {
+      font-size: .58rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(122,112,104,.45);
+    }
+
+    /* ── REVEAL ANIMATION ─────────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .8s var(--ease), transform .8s var(--ease);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── MOBILE ───────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+
+      .nav-links {
+        position: fixed;
+        top: 0; right: -100%;
+        height: 100vh; width: 70%;
+        background: var(--ink);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2.5rem;
+        transition: right .4s var(--ease);
+        z-index: 200;
+      }
+
+      .nav-links.open { right: 0; }
+      .nav-links a { font-size: .75rem; color: var(--paper) !important; }
+      .nav-toggle { display: block; z-index: 300; }
+
+      .intro-inner,
+      .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+
+      .work-grid { grid-template-columns: 1fr 1fr; }
+      .work-card:nth-child(3) { display: none; }
+
+      .albums-grid { grid-template-columns: 1fr 1fr; }
+      .album-placeholder:nth-child(3) { display: none; }
+
+      .work-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+
+      footer { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .work-grid { grid-template-columns: 1fr; }
+      .work-card:nth-child(3) { display: block; }
+      section { padding: 4rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ─────────────────────────────────────────────────────────── -->
+  <nav id="main-nav">
+    <div class="nav-brand" onclick="showPage('home')">R·K·S</div>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#" class="active" id="nav-home" onclick="showPage('home'); return false;">Home</a></li>
+      <li><a href="#" id="nav-film" onclick="showPage('film'); return false;">Film Photography</a></li>
+    </ul>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ══ PAGE: HOME ══════════════════════════════════════════════════════ -->
+  <div class="page active" id="page-home">
+
+    <!-- Hero -->
+    <section class="hero" id="home-hero">
+      <div class="hero-bg"></div>
+      <div class="hero-grain"></div>
+      <div class="hero-content">
+        <p class="hero-eyebrow">Photography &amp; Visual Storytelling</p>
+        <h1 class="hero-name">Ruban <em>Kumar</em><br>Shankar</h1>
+        <p class="hero-tagline">Light is memory. I just help you keep it.</p>
+      </div>
+      <div class="hero-scroll" onclick="document.getElementById('home-intro').scrollIntoView({behavior:'smooth'})">
+        <div class="scroll-line"></div>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- Intro -->
+    <section class="intro" id="home-intro">
+      <div class="container">
+        <div class="intro-inner">
+          <div class="intro-text reveal">
+            <p class="section-label">About</p>
+            <h2 class="section-heading">The world, <em>as I see it</em></h2>
+            <div class="intro-divider"></div>
+            <p>
+              I'm <strong>Ruban Kumar Shankar</strong> — a photographer drawn to the
+              quiet drama of everyday life. Between the ordinary and the overlooked,
+              there's a photograph waiting to be made.
+            </p>
+            <p>
+              My work moves across portrait, street, fashion, and analogue film —
+              each frame a small act of attention. I shoot with instinct, edit with
+              restraint, and believe that the best images don't explain themselves.
+            </p>
+          </div>
+          <div class="intro-aside reveal" style="transition-delay:.2s">
+            <div class="intro-aside-box">
+              <blockquote>
+                "Photography, for me, is not about capturing what is there.
+                It is about staying present long enough to see what nobody
+                else noticed."
+              </blockquote>
+              <cite>— Ruban Kumar Shankar</cite>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work Preview -->
+    <section class="work">
+      <div class="container-wide">
+        <div class="work-header reveal">
+          <div>
+            <p class="section-label" style="color:var(--warm)">Selected Work</p>
+            <h2 class="section-heading" style="color:var(--paper)">
+              Portraits. Streets. <em style="color:rgba(245,241,236,.4)">Film.</em>
+            </h2>
+          </div>
+          <a class="work-link" onclick="showPage('film'); return false;">
+            View Film Photography →
+          </a>
+        </div>
+        <div class="work-grid">
+          <div class="work-card reveal" style="transition-delay:.1s">
+            <div class="work-card-bg"></div>
+            <div class="work-card-placeholder">
+              <div class="icon"></div>
+              <p>Portrait</p>
+            </div>
+            <div class="work-card-label"><span>Portrait</span></div>
+          </div>
+          <div class="work-card reveal" style="transition-delay:.2s">
+            <div class="work-card-bg"></div>
+            <div class="work-card-placeholder">
+              <div class="icon"></div>
+              <p>Street</p>
+            </div>
+            <div class="work-card-label"><span>Street</span></div>
+          </div>
+          <div class="work-card reveal" style="transition-delay:.3s">
+            <div class="work-card-bg"></div>
+            <div class="work-card-placeholder">
+              <div class="icon"></div>
+              <p>Fashion</p>
+            </div>
+            <div class="work-card-label"><span>Fashion</span></div>
+          </div>
+        </div>
+        <p style="font-size:.65rem;letter-spacing:.18em;color:rgba(245,241,236,.25);text-align:center;margin-top:2.5rem;text-transform:uppercase;">
+          Gallery images coming soon — replace placeholders with your own Lightroom embeds
+        </p>
+      </div>
+    </section>
+
+    <!-- About Strip -->
+    <section class="about-strip">
+      <div class="container">
+        <div class="about-inner">
+          <div class="about-text reveal">
+            <p class="section-label">The Practice</p>
+            <h2 class="section-heading">Analogue soul,<br><em>digital eye</em></h2>
+            <p>
+              I began shooting on film — the grain, the patience, the cost of
+              every frame. That discipline never left me. Whether I'm holding
+              a 35mm SLR or a mirrorless body, I still compose as though the
+              roll is almost finished.
+            </p>
+            <p>
+              I work across portrait, documentary street, and editorial fashion —
+              drawn most often to the in-between moments: the glance before
+              the laugh, the stillness after the rain.
+            </p>
+          </div>
+          <div class="about-meta reveal" style="transition-delay:.2s">
+            <div class="about-stat">
+              <div class="num">35mm</div>
+              <div class="label">Film Format of Choice</div>
+            </div>
+            <div class="about-stat">
+              <div class="num">3</div>
+              <div class="label">Disciplines — Portrait · Street · Fashion</div>
+            </div>
+            <div class="about-stat">
+              <div class="num">∞</div>
+              <div class="label">Rolls of film still to be shot</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact">
+      <div class="container">
+        <p class="section-label">Get in Touch</p>
+        <h2 class="contact-heading">
+          Let's make something <em>worth keeping</em>
+        </h2>
+        <a href="mailto:hello@rubankumarshankar.com" class="btn-outline">
+          Send a Message
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <span class="brand">Ruban Kumar Shankar</span>
+      <span class="copy">© 2025 — All images reserved</span>
+    </footer>
+
+  </div>
+  <!-- /page-home -->
+
+
+  <!-- ══ PAGE: FILM PHOTOGRAPHY ══════════════════════════════════════════ -->
+  <div class="page" id="page-film">
+
+    <!-- Film Hero -->
+    <section class="film-hero">
+      <div class="film-hero-content">
+        <p class="section-label">A Curated Album</p>
+        <h1 class="film-hero-title">Film<br>Photography</h1>
+        <p class="film-hero-sub">Shot on 35mm &amp; medium format — developed in light</p>
+      </div>
+    </section>
+
+    <!-- Film Intro -->
+    <div class="film-intro">
+      <div class="film-intro-inner reveal">
+        <p>
+          There is a honesty to film that digital cannot quite replicate.
+          The slight overexposure. The halation around a streetlight.
+          The wait. These photographs were made slowly, deliberately —
+          and that stillness is inside every frame.
+        </p>
+        <div class="divider"></div>
+        <p class="section-label" style="letter-spacing:.3em">Browse the album below</p>
+      </div>
+    </div>
+
+    <!-- Lightroom Embed -->
+    <section class="film-gallery">
+      <div class="embed-wrapper">
+        <span class="embed-label">Lightroom Album — Film Series I</span>
+        <div class="lr-container">
+          <iframe
+            src="https://lightroom.adobe.com/embed/shares/6e193f0a2e384727864e77f83e6aef22/slideshow?background_color=%232D2D2D&color=%23999999"
+            allowfullscreen
+            title="Ruban Kumar Shankar — Film Photography Album">
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Upcoming / More Albums -->
+    <section class="film-more">
+      <div class="container">
+        <p class="section-label">Coming Soon</p>
+        <h2 class="section-heading">More <em>albums</em></h2>
+        <div class="albums-grid">
+          <div class="album-placeholder">
+            <div class="plus">+</div>
+            <span>Film Series II</span>
+          </div>
+          <div class="album-placeholder">
+            <div class="plus">+</div>
+            <span>Street — India</span>
+          </div>
+          <div class="album-placeholder">
+            <div class="plus">+</div>
+            <span>Portrait Work</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <span class="brand">Ruban Kumar Shankar</span>
+      <span class="copy">© 2025 — All images reserved</span>
+    </footer>
+
+  </div>
+  <!-- /page-film -->
+
+
+  <!-- ── SCRIPTS ──────────────────────────────────────────────────────── -->
+  <script>
+    // ── Page Switching ────────────────────────────────────────────────
+    function showPage(name) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+
+      const page = document.getElementById('page-' + name);
+      const navItem = document.getElementById('nav-' + name);
+      if (page) { page.classList.add('active'); window.scrollTo(0, 0); }
+      if (navItem) navItem.classList.add('active');
+
+      // Update nav colour for non-hero pages
+      const nav = document.getElementById('main-nav');
+      if (name !== 'home') {
+        nav.classList.add('scrolled');
+      } else {
+        if (window.scrollY < 60) nav.classList.remove('scrolled');
+      }
+
+      // Close mobile menu
+      document.getElementById('nav-links').classList.remove('open');
+
+      // Re-trigger reveals on new page
+      setTimeout(initReveal, 100);
+    }
+
+    // ── Scroll Nav ────────────────────────────────────────────────────
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('main-nav');
+      const homePage = document.getElementById('page-home');
+      if (homePage.classList.contains('active')) {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+      }
+    });
+
+    // ── Mobile Toggle ─────────────────────────────────────────────────
+    document.getElementById('nav-toggle').addEventListener('click', () => {
+      document.getElementById('nav-links').classList.toggle('open');
+    });
+
+    // ── Scroll Reveal ─────────────────────────────────────────────────
+    function initReveal() {
+      const els = document.querySelectorAll('.reveal:not(.visible)');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(el => observer.observe(el));
+    }
+
+    // ── Hero Ken Burns ────────────────────────────────────────────────
+    window.addEventListener('load', () => {
+      document.getElementById('home-hero')?.classList.add('loaded');
+      initReveal();
+    });
+  </script>
+</body>
+</html>

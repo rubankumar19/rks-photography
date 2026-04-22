@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Motion & Films — Ruban Kumar Shankar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<nav id="main-nav">
+  <a class="nav-brand" href="index.html">R · K · S</a>
+  <ul class="nav-links" id="nav-links">
+    <li><a id="nav-home" href="index.html">Home</a></li>
+    <li><a id="nav-portraits" href="portraits.html">Portraits</a></li>
+    <li><a id="nav-couple" href="couple.html">Couple</a></li>
+    <li><a id="nav-film" href="film.html">Film Photography</a></li>
+    <li><a id="nav-motion" href="motion.html">Motion &amp; Films</a></li>
+    <li><a id="nav-contact" href="contact.html">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<section class="motion-page">
+    <div class="container">
+      <div class="motion-content reveal">
+        <span class="section-label">Cinematics</span>
+        <h1 class="section-heading">Motion &amp; Films</h1>
+        <p>Alongside photography, I create short cinematic reels during portrait and couple sessions — small visual moments captured in motion. Simple gestures, movement, and atmosphere that complement the still images from each shoot.</p>
+        <p>I enjoy experimenting with motion as a way to expand portrait storytelling beyond a single frame.</p>
+      </div>
+
+      <div class="motion-project reveal" style="transition-delay:.2s">
+        <div class="project-head">
+          <span class="section-label">2025 — Dance Video Project</span>
+          <h3>Simple Manusan</h3>
+          <p>A small independent dance video project directed with friends, using only available resources and locations. A personal learning experience in visual storytelling, directing performers, and editing rhythm with music.</p>
+        </div>
+        <div class="video-embed">
+          <!-- 
+            TO ADD YOUR VIDEO: Replace the div.video-placeholder below with:
+            <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe>
+            or for Vimeo:
+            <iframe src="https://player.vimeo.com/video/YOUR_VIDEO_ID" allowfullscreen></iframe>
+          -->
+          <div class="video-placeholder">
+            <div class="play-icon"></div>
+            <p>Add your YouTube or Vimeo embed link here</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer><span class="footer-brand">Ruban Kumar Shankar</span><span class="footer-copy">© 2025 — Stockholm, Sweden</span></footer>
+<div class="modal-overlay" id="session-modal" onclick="closeModal(event)">
+  <div class="modal-nav-bar" onclick="event.stopPropagation()">
+    <div>
+      <div class="modal-title" id="modal-title">Session</div>
+      <div class="modal-meta" id="modal-meta">Portrait · Stockholm</div>
+    </div>
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+  </div>
+  <div class="modal-body" onclick="event.stopPropagation()" id="modal-body"></div>
+</div>
+<script src="site.js"></script>
+</body>
+</html>

@@ -154,8 +154,22 @@ function initTestimonials() {
   startTimer();
 }
 
+function initFlashBrand() {
+  document.querySelectorAll('.flashr').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      el.classList.remove('is-firing');
+      void el.offsetWidth;
+      el.classList.add('is-firing');
+      const href = el.getAttribute('href') || 'index.html';
+      setTimeout(function () { window.location.href = href; }, 300);
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
+  initFlashBrand();
   renderPortraits();
   renderCouples();
   initReveal();

@@ -12,14 +12,18 @@
 <body>
 <nav id="main-nav">
   <a class="nav-brand flashr" href="index.html" aria-label="Home"><span class="flashr-r">R</span><span class="flashr-bulb"></span><span class="flashr-glow"></span><span class="flashr-sweep"></span><span class="flashr-burst"></span></a>
-  <ul class="nav-links" id="nav-links">
-    <li><a id="nav-home" href="index.html">Home</a></li>
-    <li><a id="nav-portraits" href="portraits.html">Portraits</a></li>
-    <li><a id="nav-couple" href="couple.html">Couple</a></li>
-    <li><a id="nav-film" href="film.html">Film Photography</a></li>
-    <li><a id="nav-motion" href="motion.html">Motion &amp; Films</a></li>
-    <li><a id="nav-contact" href="contact.html">Contact</a></li>
-  </ul>
+  <div class="nav-menu" id="nav-menu">
+    <ul class="nav-group">
+      <li><a id="nav-home" href="index.html">Home</a></li>
+      <li><a id="nav-portraits" href="portraits.html">Portraits</a></li>
+      <li><a id="nav-couple" href="couple.html">Couple</a></li>
+    </ul>
+    <ul class="nav-group">
+      <li><a id="nav-film" href="film.html">Film Photography</a></li>
+      <li><a id="nav-motion" href="motion.html">Motion &amp; Films</a></li>
+      <li><a id="nav-contact" href="contact.html">Contact</a></li>
+    </ul>
+  </div>
   <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -44,5 +48,6 @@
   <div class="modal-body" onclick="event.stopPropagation()" id="modal-body"></div>
 </div>
 <script src="site.js"></script>
+<script src="flight.js"></script>
 </body>
 </html>

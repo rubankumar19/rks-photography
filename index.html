@@ -12,22 +12,26 @@
 <body>
 <nav id="main-nav">
   <a class="nav-brand flashr" href="index.html" aria-label="Home"><span class="flashr-r">R</span><span class="flashr-bulb"></span><span class="flashr-glow"></span><span class="flashr-sweep"></span><span class="flashr-burst"></span></a>
-  <ul class="nav-links" id="nav-links">
-    <li><a id="nav-home" href="index.html">Home</a></li>
-    <li><a id="nav-portraits" href="portraits.html">Portraits</a></li>
-    <li><a id="nav-couple" href="couple.html">Couple</a></li>
-    <li><a id="nav-film" href="film.html">Film Photography</a></li>
-    <li><a id="nav-motion" href="motion.html">Motion &amp; Films</a></li>
-    <li><a id="nav-contact" href="contact.html">Contact</a></li>
-  </ul>
+  <div class="nav-menu" id="nav-menu">
+    <ul class="nav-group">
+      <li><a id="nav-home" href="index.html">Home</a></li>
+      <li><a id="nav-portraits" href="portraits.html">Portraits</a></li>
+      <li><a id="nav-couple" href="couple.html">Couple</a></li>
+    </ul>
+    <ul class="nav-group">
+      <li><a id="nav-film" href="film.html">Film Photography</a></li>
+      <li><a id="nav-motion" href="motion.html">Motion &amp; Films</a></li>
+      <li><a id="nav-contact" href="contact.html">Contact</a></li>
+    </ul>
+  </div>
   <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 <section class="hero">
     <div class="hero-content">
-      <p class="hero-eyebrow">Stockholm · Portrait · Street · Film</p>
-      <h1 class="hero-name">Ruban <em>Kumar</em><br>Shankar</h1>
+      
+      <h1 class="hero-name">Ruban <em>K</em> Shankar</h1>
       <p class="hero-sub">Mood, expression, and quiet moments.</p>
       <a class="hero-cta" href="portraits.html">View Work</a>
     </div>
@@ -107,7 +111,10 @@
     </div>
   </section>
 
-  <footer><span class="footer-brand">Ruban Kumar Shankar</span><span class="footer-copy">© 2026 — Stockholm, Sweden</span></footer>
+  <section class="photo-marquee-section">
+  <div class="photo-marquee"><div class="pm-track" id="home-marquee"></div></div>
+</section>
+<footer><span class="footer-brand">Ruban Kumar Shankar</span><span class="footer-copy">© 2026 — Stockholm, Sweden</span></footer>
 <div class="modal-overlay" id="session-modal" onclick="closeModal(event)">
   <div class="modal-nav-bar" onclick="event.stopPropagation()">
     <div>
@@ -119,5 +126,6 @@
   <div class="modal-body" onclick="event.stopPropagation()" id="modal-body"></div>
 </div>
 <script src="site.js"></script>
+<script src="flight.js"></script>
 </body>
 </html>

@@ -31,7 +31,7 @@ function setActiveNav() {
     '': 'nav-home'
   };
   const activeId = map[path] || 'nav-home';
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.nav-group a').forEach(a => a.classList.remove('active'));
   const el = document.getElementById(activeId);
   if (el) el.classList.add('active');
 }
@@ -46,7 +46,7 @@ function handleNavScroll() {
 
 function initNav() {
   const toggle = document.getElementById('nav-toggle');
-  const links = document.getElementById('nav-links');
+  const links = document.getElementById('nav-menu');
   if (toggle && links) toggle.addEventListener('click', () => links.classList.toggle('open'));
   if (links) links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
   setActiveNav();
@@ -72,6 +72,13 @@ function renderCouples() {
       <img src="${CDN}${c.cover}" alt="${c.name}" loading="lazy"/>
       <div class="c-label"><div class="type">${c.meta}</div><div class="name">${c.name}</div></div>
     </div>`).join('');
+}
+
+function renderMarquee() {
+  const track = document.getElementById('home-marquee');
+  if (!track) return;
+  const imgs = portraits.concat(couples).map(p => `<img src="${CDN}${p.cover}" alt="" loading="lazy"/>`).join('');
+  track.innerHTML = imgs + imgs; // duplicate for seamless loop
 }
 
 function openSession(item) {
@@ -170,6 +177,7 @@ function initFlashBrand() {
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initFlashBrand();
+  renderMarquee();
   renderPortraits();
   renderCouples();
   initReveal();

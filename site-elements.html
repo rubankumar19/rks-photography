@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>New Elements — Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@200;300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --ink:#191613; --paper:#f4f0ea; --ghost:#edeae4; --warm:#c4a070; --muted:#7a7068;
+    --serif:'Cormorant Garamond',Georgia,serif; --sans:'Raleway',sans-serif;
+    --ease:cubic-bezier(.25,.46,.45,.94);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden;}
+
+  /* ============ 4 · FILM GRAIN OVERLAY ============ */
+  .grain{position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grainshift 1.1s steps(4) infinite;}
+  @keyframes grainshift{
+    0%{transform:translate(0,0)} 25%{transform:translate(-3%,2%)} 50%{transform:translate(2%,-3%)}
+    75%{transform:translate(-2%,-2%)} 100%{transform:translate(3%,3%)} }
+
+  /* demo scaffold */
+  .kit-head{padding:5rem 2.5rem 1rem;max-width:1100px;margin:0 auto;}
+  .kit-head h1{font-family:var(--serif);font-weight:300;font-size:2.6rem;}
+  .kit-head p{color:var(--muted);font-family:var(--serif);font-style:italic;font-size:1.1rem;margin-top:.4rem;}
+  .kit-tag{font-size:.55rem;letter-spacing:.34em;text-transform:uppercase;color:var(--warm);display:block;margin-bottom:.8rem;}
+  .kit-block{max-width:1100px;margin:3.5rem auto 0;padding:0 2.5rem;}
+  .kit-label{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:1.1rem;display:block;}
+  .kit-label b{color:var(--warm);font-weight:400;}
+
+  /* ============ 1 · ABSTRACT MOVING BANNER ============ */
+  .abstract-banner{position:relative;height:280px;border-radius:2px;overflow:hidden;
+    background:linear-gradient(175deg,#1e1810,#12100d 45%,#0e0c09);display:flex;align-items:center;justify-content:center;}
+  .ab-orb{position:absolute;border-radius:50%;filter:blur(48px);opacity:.55;mix-blend-mode:screen;}
+  .ab-orb.o1{width:340px;height:340px;background:radial-gradient(circle,#caa06e,transparent 70%);top:-90px;left:6%;animation:drift1 17s var(--ease) infinite;}
+  .ab-orb.o2{width:300px;height:300px;background:radial-gradient(circle,#4d6f7a,transparent 70%);bottom:-110px;right:10%;animation:drift2 21s var(--ease) infinite;}
+  .ab-orb.o3{width:220px;height:220px;background:radial-gradient(circle,#8a5a3c,transparent 70%);top:30%;left:44%;animation:drift3 14s var(--ease) infinite;}
+  @keyframes drift1{0%,100%{transform:translate(0,0)}50%{transform:translate(60px,40px)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-70px,-30px)}}
+  @keyframes drift3{0%,100%{transform:translate(0,0)}33%{transform:translate(-40px,30px)}66%{transform:translate(40px,-20px)}}
+  .abstract-banner::after{content:'';position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,.014) 2px,rgba(255,255,255,.014) 3px);}
+  .ab-caption{position:relative;z-index:2;text-align:center;}
+  .ab-caption .e{font-size:.55rem;letter-spacing:.4em;text-transform:uppercase;color:var(--warm);}
+  .ab-caption .t{font-family:var(--serif);font-style:italic;font-weight:300;font-size:2rem;color:var(--paper);margin-top:.5rem;letter-spacing:.03em;}
+
+  /* ============ 2 · AUTO-SCROLL PHOTO MARQUEE ============ */
+  .photo-marquee{position:relative;overflow:hidden;padding:.5rem 0;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
+  .pm-track{display:flex;gap:1rem;width:max-content;animation:marquee 44s linear infinite;}
+  .photo-marquee:hover .pm-track{animation-play-state:paused;}
+  .pm-track img{height:230px;width:auto;object-fit:cover;display:block;
+    filter:brightness(.92) saturate(.82) grayscale(.1);transition:filter .5s var(--ease);}
+  .pm-track img:hover{filter:brightness(1) saturate(1) grayscale(0);}
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ============ 3 · SECTION DIVIDERS ============ */
+  .div-demo{background:var(--ghost);padding:2.4rem 0;margin-top:1.2rem;}
+
+  /* a: line + diamond */
+  .divider-diamond{display:flex;align-items:center;justify-content:center;gap:1.4rem;}
+  .divider-diamond .ln{width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--warm));}
+  .divider-diamond .ln.r{background:linear-gradient(90deg,var(--warm),transparent);}
+  .divider-diamond .dm{width:7px;height:7px;background:var(--warm);transform:rotate(45deg);}
+
+  /* b: word strip marquee */
+  .divider-words{overflow:hidden;padding:.9rem 0;border-top:1px solid rgba(122,112,104,.18);border-bottom:1px solid rgba(122,112,104,.18);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
+  .dw-track{display:flex;gap:2.4rem;width:max-content;animation:marquee 32s linear infinite;white-space:nowrap;}
+  .dw-track span{font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--muted);letter-spacing:.04em;}
+  .dw-track span::after{content:'✦';margin-left:2.4rem;color:var(--warm);font-style:normal;font-size:.7rem;vertical-align:middle;}
+
+  /* c: monogram ornament */
+  .divider-mono{display:flex;align-items:center;justify-content:center;gap:1.6rem;}
+  .divider-mono .ln{width:90px;height:1px;background:rgba(122,112,104,.3);}
+  .divider-mono .r{font-family:'Pinyon Script',cursive;font-size:2.1rem;color:var(--warm);line-height:.6;}
+
+  .note{max-width:1100px;margin:4rem auto 6rem;padding:0 2.5rem;color:var(--muted);font-family:var(--serif);font-style:italic;font-size:1.05rem;}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="kit-head">
+  <span class="kit-tag">New Elements · Preview</span>
+  <h1>Motion &amp; texture kit</h1>
+  <p>Four reusable pieces in your existing palette — pick what you want on the live site.</p>
+</div>
+
+<!-- 1 -->
+<div class="kit-block">
+  <span class="kit-label"><b>01</b> &nbsp; Abstract moving banner</span>
+  <div class="abstract-banner">
+    <div class="ab-orb o1"></div><div class="ab-orb o2"></div><div class="ab-orb o3"></div>
+    <div class="ab-caption">
+      <div class="e">Stockholm · Portrait · Film</div>
+      <div class="t">Light, mood &amp; quiet motion</div>
+    </div>
+  </div>
+</div>
+
+<!-- 3a -->
+<div class="kit-block">
+  <span class="kit-label"><b>03</b> &nbsp; Section dividers</span>
+  <div class="div-demo">
+    <div class="divider-diamond"><span class="ln"></span><span class="dm"></span><span class="ln r"></span></div>
+  </div>
+</div>
+
+<!-- 2 -->
+<div class="kit-block">
+  <span class="kit-label"><b>02</b> &nbsp; Auto-scrolling photo banner &nbsp;<span style="color:var(--muted);text-transform:none;letter-spacing:0;font-style:italic;font-family:var(--serif);">(hover to pause)</span></span>
+</div>
+<div class="photo-marquee">
+  <div class="pm-track" id="pmtrack"></div>
+</div>
+
+<!-- 3b -->
+<div class="div-demo" style="margin-top:2.4rem;">
+  <div class="divider-words">
+    <div class="dw-track">
+      <span>Portraits</span><span>Couples</span><span>Film Photography</span><span>Motion</span><span>Street</span><span>Editorial</span>
+      <span>Portraits</span><span>Couples</span><span>Film Photography</span><span>Motion</span><span>Street</span><span>Editorial</span>
+    </div>
+  </div>
+</div>
+
+<!-- 3c -->
+<div class="kit-block">
+  <div class="div-demo" style="background:var(--paper);">
+    <div class="divider-mono"><span class="ln"></span><span class="r">R</span><span class="ln"></span></div>
+  </div>
+</div>
+
+<p class="note">The film grain is running across this whole page (subtle — look at the flat colour areas). Tell me which pieces you want and where, and I'll wire them into your live pages.</p>
+
+<script>
+  var CDN='https://cdn.myportfolio.com/83d0ee9f-f823-47f2-b3d6-2b49afa565c9/';
+  var covers=[
+    '6a889fc2-a87f-40f0-946a-40c89213c8d4_rwc_0x434x1365x1365x32.jpg?h=e5824a8cd0b919c02f7b81f8e61b1beb',
+    'cc464dd8-e1a1-41e9-aa46-a20402aed9d6_rwc_0x124x1365x1365x32.jpg?h=5d4fd15ab822c823a84d8956f22a71a8',
+    '19d73f71-28dd-4c30-80e5-14134977dac4_rwc_548x744x606x455x32.jpg?h=1f01c0d7c33ad771f77fcad5062c23b5',
+    '1fc1b30e-5078-4df9-adc0-b8105dc279c8_rwc_545x135x621x621x32.jpg?h=3cc8e487d2a5928ca1f982d6784e08d1',
+    '96652475-db82-4386-ae96-0d65fc5aee47_rwc_0x335x1365x1365x32.jpg?h=00d3c9fef164f3ab9997f52ba1496b33',
+    '38451275-341d-402b-856a-7468b01807b9_rwc_0x43x1364x1023x32.jpg?h=67e2d3b35a8bdc6e90f108403829c942',
+    '54c1e97b-1a5a-4205-84d8-922640e21d46_rwc_798x50x1118x1118x32.jpg?h=c1e9398c93be6371855bf34e8eb052a5',
+    '69127b3c-bbdf-457a-b931-1e47bdfa83cd_carw_4x3x32.jpg?h=a9c0beec62201f00fc9ded3cd78712cf'
+  ];
+  var html=covers.map(function(c){return '<img src="'+CDN+c+'" alt="" loading="lazy"/>';}).join('');
+  document.getElementById('pmtrack').innerHTML=html+html; // duplicate for seamless loop
+</script>
+<script src="flight.js"></script>
+</body>
+</html>

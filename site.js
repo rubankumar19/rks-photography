@@ -1,3 +1,4 @@
+
 const CDN = 'https://cdn.myportfolio.com/83d0ee9f-f823-47f2-b3d6-2b49afa565c9/';
 const portraits = [
     { name:'Bhoomika',  meta:'Portrait · Stockholm', cover:'6a889fc2-a87f-40f0-946a-40c89213c8d4_rwc_0x434x1365x1365x32.jpg?h=e5824a8cd0b919c02f7b81f8e61b1beb',  lrId:'db7b9d5afd2d4ce3b31afee390951758' },
@@ -119,9 +120,44 @@ function initReveal() {
 }
 
 
+function initTestimonials() {
+  const slides = document.querySelectorAll('.testimonial-slide');
+  const dots = document.querySelectorAll('.testimonial-dots .dot');
+  if (!slides.length) return;
+  let current = 0;
+  let timer;
+
+  function showSlide(i) {
+    slides.forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    slides[i].classList.add('active');
+    if (dots[i]) dots[i].classList.add('active');
+    current = i;
+  }
+
+  function nextSlide() {
+    showSlide((current + 1) % slides.length);
+  }
+
+  function startTimer() {
+    timer = setInterval(nextSlide, 5000);
+  }
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      clearInterval(timer);
+      showSlide(i);
+      startTimer();
+    });
+  });
+
+  startTimer();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
   renderPortraits();
   renderCouples();
   initReveal();
+  initTestimonials();
 });

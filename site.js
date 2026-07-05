@@ -1,3 +1,4 @@
+
 const CDN = 'https://cdn.myportfolio.com/83d0ee9f-f823-47f2-b3d6-2b49afa565c9/';
 const portraits = [
     { name:'Bhoomika',  meta:'Portrait · Stockholm', cover:'6a889fc2-a87f-40f0-946a-40c89213c8d4_rwc_0x434x1365x1365x32.jpg?h=e5824a8cd0b919c02f7b81f8e61b1beb',  lrId:'db7b9d5afd2d4ce3b31afee390951758' },
@@ -30,7 +31,7 @@ function setActiveNav() {
     '': 'nav-home'
   };
   const activeId = map[path] || 'nav-home';
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.nav-group a').forEach(a => a.classList.remove('active'));
   const el = document.getElementById(activeId);
   if (el) el.classList.add('active');
 }
@@ -45,7 +46,7 @@ function handleNavScroll() {
 
 function initNav() {
   const toggle = document.getElementById('nav-toggle');
-  const links = document.getElementById('nav-links');
+  const links = document.getElementById('nav-menu');
   if (toggle && links) toggle.addEventListener('click', () => links.classList.toggle('open'));
   if (links) links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
   setActiveNav();
@@ -71,6 +72,13 @@ function renderCouples() {
       <img src="${CDN}${c.cover}" alt="${c.name}" loading="lazy"/>
       <div class="c-label"><div class="type">${c.meta}</div><div class="name">${c.name}</div></div>
     </div>`).join('');
+}
+
+function renderMarquee() {
+  const track = document.getElementById('home-marquee');
+  if (!track) return;
+  const imgs = portraits.concat(couples).map(p => `<img src="${CDN}${p.cover}" alt="" loading="lazy"/>`).join('');
+  track.innerHTML = imgs + imgs; // duplicate for seamless loop
 }
 
 function openSession(item) {
@@ -119,9 +127,59 @@ function initReveal() {
 }
 
 
+function initTestimonials() {
+  const slides = document.querySelectorAll('.testimonial-slide');
+  const dots = document.querySelectorAll('.testimonial-dots .dot');
+  if (!slides.length) return;
+  let current = 0;
+  let timer;
+
+  function showSlide(i) {
+    slides.forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    slides[i].classList.add('active');
+    if (dots[i]) dots[i].classList.add('active');
+    current = i;
+  }
+
+  function nextSlide() {
+    showSlide((current + 1) % slides.length);
+  }
+
+  function startTimer() {
+    timer = setInterval(nextSlide, 5000);
+  }
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      clearInterval(timer);
+      showSlide(i);
+      startTimer();
+    });
+  });
+
+  startTimer();
+}
+
+function initFlashBrand() {
+  document.querySelectorAll('.flashr').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      el.classList.remove('is-firing');
+      void el.offsetWidth;
+      el.classList.add('is-firing');
+      const href = el.getAttribute('href') || 'index.html';
+      setTimeout(function () { window.location.href = href; }, 300);
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
+  initFlashBrand();
+  renderMarquee();
   renderPortraits();
   renderCouples();
   initReveal();
+  initTestimonials();
 });

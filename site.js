@@ -1,23 +1,24 @@
 
-const CDN = 'https://cdn.myportfolio.com/83d0ee9f-f823-47f2-b3d6-2b49afa565c9/';
 const portraits = [
-    { name:'Bhoomika',  meta:'Portrait · Stockholm', cover:'6a889fc2-a87f-40f0-946a-40c89213c8d4_rwc_0x434x1365x1365x32.jpg?h=e5824a8cd0b919c02f7b81f8e61b1beb',  lrId:'db7b9d5afd2d4ce3b31afee390951758' },
-    { name:'Swetha',    meta:'Portrait · Stockholm', cover:'cc464dd8-e1a1-41e9-aa46-a20402aed9d6_rwc_0x124x1365x1365x32.jpg?h=5d4fd15ab822c823a84d8956f22a71a8',  lrId:'17fbefefdfcb46c6b4253a1821c226eb' },
-    { name:'Ashwini',   meta:'Portrait · Stockholm', cover:'19d73f71-28dd-4c30-80e5-14134977dac4_rwc_548x744x606x455x32.jpg?h=1f01c0d7c33ad771f77fcad5062c23b5', lrId:'4f7fbc6c78c24ce2b836b95b0376047a' },
-    { name:'Nakshatra', meta:'Portrait · Stockholm', cover:'1fc1b30e-5078-4df9-adc0-b8105dc279c8_rwc_545x135x621x621x32.jpg?h=3cc8e487d2a5928ca1f982d6784e08d1',  lrId:'66143d5b4e1c4849bedc17fa6c13efcf' },
-    { name:'Adhith',    meta:'Portrait · Stockholm', cover:'96652475-db82-4386-ae96-0d65fc5aee47_rwc_0x335x1365x1365x32.jpg?h=00d3c9fef164f3ab9997f52ba1496b33',  lrId:'feb1796c30b649e0811897b725190ea7' },
-    { name:'Raveena',   meta:'Portrait · Stockholm', cover:'38451275-341d-402b-856a-7468b01807b9_rwc_0x43x1364x1023x32.jpg?h=67e2d3b35a8bdc6e90f108403829c942',   lrId:'59dee6a3a563445687b22174005fc188' },
-    { name:'Bhargav',   meta:'Portrait · Stockholm', cover:'54c1e97b-1a5a-4205-84d8-922640e21d46_rwc_798x50x1118x1118x32.jpg?h=c1e9398c93be6371855bf34e8eb052a5',  lrId:'6d6b50377ca44a7ea3bec46785b8bf4c' },
-    { name:'Monica',    meta:'Portrait · Stockholm', cover:'69127b3c-bbdf-457a-b931-1e47bdfa83cd_carw_4x3x32.jpg?h=a9c0beec62201f00fc9ded3cd78712cf',           lrId:'4e0d611640af48578ea47aa76ae8afef' },
-    { name:'Marie',     meta:'Portrait · Stockholm', cover:'6ecd5fd0-8e86-448a-a96d-a53fddca3b27_rwc_0x514x1365x1023x32.jpg?h=0256cfa78811563c2a2329a918f8a9d6',   lrId:'ed8cc245fa7049e3b13d2fc4afcd4042' },
-    { name:'Yann',      meta:'Portrait · Stockholm', cover:'4913ef33-2352-42ee-ac20-65a6d464dff4_rwc_240x426x868x868x32.jpg?h=840abae29b1bb3954dd4d6614f35d624',   lrId:'cfab3e5f881e4a2b8d98ed2cc3aaab11' },
+    { name:'Bhoomika',  meta:'Portrait · Stockholm', cover:'Photos/Portraits/Bhoomika.jpg',  lrId:'db7b9d5afd2d4ce3b31afee390951758' },
+    { name:'Swetha',    meta:'Portrait · Stockholm', cover:'Photos/Portraits/Swetha.jpg',    lrId:'17fbefefdfcb46c6b4253a1821c226eb' },
+    { name:'Ashwini',   meta:'Portrait · Stockholm', cover:'Photos/Portraits/Aswini.jpg',    lrId:'4f7fbc6c78c24ce2b836b95b0376047a' },
+    { name:'Nakshatra', meta:'Portrait · Stockholm', cover:'Photos/Portraits/Nakshatra.jpg', lrId:'66143d5b4e1c4849bedc17fa6c13efcf' },
+    { name:'Adhith',    meta:'Portrait · Stockholm', cover:'Photos/Portraits/Adhith.jpg',    lrId:'feb1796c30b649e0811897b725190ea7' },
+    { name:'Raveena',   meta:'Portrait · Stockholm', cover:'Photos/Portraits/Raveena.jpg',   lrId:'59dee6a3a563445687b22174005fc188' },
+    { name:'Bhargav',   meta:'Portrait · Stockholm', cover:'Photos/Portraits/Bhargav.jpg',   lrId:'6d6b50377ca44a7ea3bec46785b8bf4c' },
+    { name:'Monica',    meta:'Portrait · Stockholm', cover:'Photos/Portraits/Monica.jpg',    lrId:'4e0d611640af48578ea47aa76ae8afef' },
+    { name:'Marie',     meta:'Portrait · Stockholm', cover:'Photos/Portraits/Marie.jpg',     lrId:'ed8cc245fa7049e3b13d2fc4afcd4042' },
+    { name:'Yann',      meta:'Portrait · Stockholm', cover:'Photos/Portraits/Yann.jpg',      lrId:'cfab3e5f881e4a2b8d98ed2cc3aaab11' },
   ];
 const couples = [
-    { name:'Mohan & Akansha',    meta:'Couple Session', cover:'3237077a-9f48-49ce-8d47-b8405699589f_rwc_0x595x1365x1365x32.jpg?h=fba1a4f6bc89c14a0c44345f353e8f5a', lrId:'d06aae9605794fbba916692637ed3b05' },
-    { name:'Satheesh & Aswathy', meta:'Couple Session', cover:'ff7f416a-965d-4105-9a3f-953dd8f94fc2_rwc_0x167x1365x1365x32.jpg?h=c866a558199d59e6c6de123ffabe607d',  lrId:'54e74ae957544899bad8526358d7bc35' },
-    { name:'Yann & Swetha',      meta:'Couple Session', cover:'6cdbfb5c-423a-4064-8e70-bd178c0bec74_rwc_0x241x1365x1365x32.jpg?h=81e8a43a92b95a930bdb6b8a08e8be84',  lrId:'41d6f8e68c4044aba8810bf8add8c59a' },
-    { name:'Rajesh & Ankita',    meta:'Couple Session', cover:'d9921c5f-e5ba-4ab1-a353-40a082db8fb1_rwc_0x376x1151x1151x32.jpg?h=54b6c1278aab48032baca0155207c3d6',  lrId:'2a4bb67805654fcebbcc8db749457582' },
+    { name:'Mohan & Akansha',    meta:'Couple Session', cover:'Photos/Couple/Mohan & Akansha.jpg',      lrId:'d06aae9605794fbba916692637ed3b05' },
+    { name:'Satheesh & Aswathy', meta:'Couple Session', cover:'Photos/Couple/Satheesh & Ashwathy.jpg',  lrId:'54e74ae957544899bad8526358d7bc35' },
+    { name:'Yann & Swetha',      meta:'Couple Session', cover:'Photos/Couple/Yann & Swetha.jpg',        lrId:'41d6f8e68c4044aba8810bf8add8c59a' },
+    { name:'Rajesh & Ankita',    meta:'Couple Session', cover:'Photos/Couple/Rajesh & Ankita.jpg',      lrId:'2a4bb67805654fcebbcc8db749457582' },
   ];
+
+function imgSrc(path) { return encodeURI(path); }
 
 function setActiveNav() {
   const path = window.location.pathname.split('/').pop() || 'index.html';
@@ -59,7 +60,7 @@ function renderPortraits() {
   if (!grid) return;
   grid.innerHTML = portraits.map((p,i) => `
     <div class="portrait-card" onclick="openSession(portraits[${i}])" style="animation-delay:${i*.06}s">
-      <img src="${CDN}${p.cover}" alt="${p.name}" loading="lazy"/>
+      <img src="${imgSrc(p.cover)}" alt="${p.name}" loading="lazy"/>
       <div class="p-label"><div class="type">${p.meta}</div><div class="name">${p.name}</div></div>
     </div>`).join('');
 }
@@ -69,7 +70,7 @@ function renderCouples() {
   if (!grid) return;
   grid.innerHTML = couples.map((c,i) => `
     <div class="couple-card" onclick="openSession(couples[${i}])" style="animation-delay:${i*.08}s">
-      <img src="${CDN}${c.cover}" alt="${c.name}" loading="lazy"/>
+      <img src="${imgSrc(c.cover)}" alt="${c.name}" loading="lazy"/>
       <div class="c-label"><div class="type">${c.meta}</div><div class="name">${c.name}</div></div>
     </div>`).join('');
 }
@@ -77,7 +78,7 @@ function renderCouples() {
 function renderMarquee() {
   const track = document.getElementById('home-marquee');
   if (!track) return;
-  const imgs = portraits.concat(couples).map(p => `<img src="${CDN}${p.cover}" alt="" loading="lazy"/>`).join('');
+  const imgs = portraits.concat(couples).map(p => `<img src="${imgSrc(p.cover)}" alt="" loading="lazy"/>`).join('');
   track.innerHTML = imgs + imgs; // duplicate for seamless loop
 }
 
@@ -93,7 +94,7 @@ function openSession(item) {
   } else {
     body.innerHTML = `
       <div class="modal-cover">
-        <img src="${CDN}${item.cover}" alt="${item.name}"/>
+        <img src="${imgSrc(item.cover)}" alt="${item.name}"/>
         <div class="modal-cover-note">
           <span class="label">Full Album</span>
           <p>To display the full Lightroom album here, open the relevant data entry in <code>site.js</code>, find <strong>${item.name}</strong>, and set <code>lrId</code> to your Lightroom share ID.</p>
